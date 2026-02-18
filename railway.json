@@ -2,15 +2,10 @@
     "$schema": "https://railway.app/railway.schema.json",
     "build": {
         "builder": "NIXPACKS",
-        "buildCommand": "cd backend && npm install",
-        "watchPatterns": [
-            "backend/**",
-            "frontend/**"
-        ]
+        "buildCommand": "npm install"
     },
     "deploy": {
-        "startCommand": "cd backend && npm start",
-        "restartPolicyType": "ON_FAILURE",
-        "restartPolicyMaxRetries": 10
+        "startCommand": "npm start",
+        "workingDirectory": "backend"
     }
 }
