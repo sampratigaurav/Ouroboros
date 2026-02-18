@@ -1,10 +1,10 @@
 
 // config.js - Environment configuration
 (function () {
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
     window.GameConfig = {
-        // dynamic backend URL: uses current origin in production, or localhost:3000 in dev
-        BACKEND_URL: (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-            ? 'http://localhost:3000'
-            : window.location.origin
+        // If local, use localhost:3000. If production (same domain), use relative path (empty string)
+        // This allows io() to auto-detect and fetch() to use relative paths
+        BACKEND_URL: isLocal ? 'http://localhost:3000' : ''
     };
 })();
