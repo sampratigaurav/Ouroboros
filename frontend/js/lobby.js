@@ -3,10 +3,7 @@
 (function () {
     'use strict';
 
-    const socket = io(window.GameConfig.BACKEND_URL, {
-        transports: ["websocket", "polling"],
-        secure: true
-    });
+    const socket = io();
 
     // DOM elements
     const menuView = document.getElementById('menu-view');

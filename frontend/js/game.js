@@ -409,10 +409,7 @@
     //  MULTIPLAYER MODE
     // ═══════════════════════════════════════
     function initMultiplayerMode() {
-        const socket = io(window.GameConfig.BACKEND_URL, {
-            transports: ["websocket", "polling"],
-            secure: true
-        });
+        const socket = io();
 
         // Init touch controls for multiplayer
         if (window.TouchControls) {

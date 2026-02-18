@@ -15,9 +15,7 @@ const app = express();
 const server = http.createServer(app);
 
 const allowedOrigins = [
-    'https://ouroboros-rd4irpnik-samprati-gauravs-projects.vercel.app',
-    'http://localhost:3000',
-    'http://127.0.0.1:3000'
+    'https://ouroboros-rd4irpnik-samprati-gauravs-projects.vercel.app'
 ];
 
 app.use(cors({
@@ -45,7 +43,13 @@ const io = new Server(server, {
 const PORT = process.env.PORT || 3000;
 
 // Serve static frontend
+// Serve static frontend
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
+
+// Serve index.html for root
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'frontend', 'index.html'));
+});
 app.use(express.json());
 
 // API: Leaderboard
