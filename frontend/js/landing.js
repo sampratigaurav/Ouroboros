@@ -281,6 +281,15 @@
     document.getElementById('htp-close').addEventListener('click', () => closeModal('how-to-play-modal'));
     document.getElementById('about-close').addEventListener('click', () => closeModal('about-modal'));
 
+    // Touch support for modals
+    const touchHandler = (id) => (e) => { e.preventDefault(); openModal(id); };
+    const closeHandler = (id) => (e) => { e.preventDefault(); closeModal(id); };
+
+    document.getElementById('nav-how-to-play').addEventListener('touchstart', touchHandler('how-to-play-modal'), { passive: false });
+    document.getElementById('nav-about').addEventListener('touchstart', touchHandler('about-modal'), { passive: false });
+    document.getElementById('htp-close').addEventListener('touchstart', closeHandler('how-to-play-modal'), { passive: false });
+    document.getElementById('about-close').addEventListener('touchstart', closeHandler('about-modal'), { passive: false });
+
     document.querySelectorAll('.modal-overlay').forEach(overlay => {
         overlay.addEventListener('click', (e) => {
             if (e.target === overlay) { overlay.classList.remove('active'); document.body.style.overflow = ''; }

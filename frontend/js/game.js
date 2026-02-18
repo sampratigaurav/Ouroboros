@@ -83,16 +83,13 @@
         wireEngineEvents(soloEngine);
 
         // Init controls — wire directly to solo engine
-        GameControls.init({
-            emit: function (event, data) {
-                if (!soloEngine) return;
-                switch (event) {
-                    case 'direction': soloEngine.setDirection(actualId, data); break;
-                    case 'dash': soloEngine.activateDash(actualId); break;
-                    case 'trap': soloEngine.placeTrap(actualId); break;
-                }
-            }
-        });
+        // Init controls — shared logic handled by global functions
+        GameControls.init(null);
+
+        // Init touch controls for mobile
+        if (window.TouchControls) {
+            TouchControls.init({ socket: null, soloEngine: soloEngine, playerId: actualId });
+        }
 
         // Engine callbacks
         soloEngine.onStateUpdate = (state) => {
@@ -417,6 +414,11 @@
             secure: true
         });
 
+        // Init touch controls for multiplayer
+        if (window.TouchControls) {
+            TouchControls.init({ socket: socket });
+        }
+
         socket.on('connect', () => {
             actualId = socket.id;
             const token = sessionStorage.getItem('ouroboros_token');
@@ -446,7 +448,10 @@
                 GameControls.setDirection(state.snakes[actualId].direction);
             }
             if (!renderStarted) { renderStarted = true; renderLoop(); }
-            startCountdown(() => { GameControls.enable(); });
+            startCountdown(() => {
+                GameControls.enable();
+                window.focus();
+            });
         });
 
         socket.on('gameState', (state) => {
@@ -487,13 +492,17 @@
 
         socket.on('returnToLobby', () => { window.location.href = 'lobby.html'; });
 
-        btnPlayAgain.addEventListener('click', () => { socket.emit('playAgain'); });
-        btnBackLobby.addEventListener('click', () => {
+        const mpPlayAgain = () => { socket.emit('playAgain'); };
+        const mpBackLobby = () => {
             socket.emit('leaveRoom');
             sessionStorage.removeItem('ouroboros_token');
             sessionStorage.removeItem('ouroboros_room');
             window.location.href = 'lobby.html';
-        });
+        };
+        btnPlayAgain.addEventListener('click', mpPlayAgain);
+        btnBackLobby.addEventListener('click', mpBackLobby);
+        btnPlayAgain.addEventListener('touchstart', function (e) { e.preventDefault(); mpPlayAgain(); }, { passive: false });
+        btnBackLobby.addEventListener('touchstart', function (e) { e.preventDefault(); mpBackLobby(); }, { passive: false });
     }
 
 
@@ -502,13 +511,78 @@
     // ═══════════════════════════════════════
 
     // ── Play Again / Back (solo override) ──
+    // ── Global Ability Functions ──
+    window.activateDash = function () {
+        if (!gameRunning || playerDead) return;
+
+        let me = null;
+        if (latestState && actualId && latestState.snakes[actualId]) {
+            me = latestState.snakes[actualId];
+            if (me.dashCooldown > 0) return; // Prevent spam
+        }
+
+        console.log('[Game] Activate Dash');
+
+        if (isSolo) {
+            if (soloEngine && actualId) soloEngine.activateDash(actualId);
+        } else {
+            // Multiplayer
+            const socket = window.GameControls.getSocket();
+            if (socket) socket.emit('dash');
+        }
+    };
+
+    window.placeTrap = function () {
+        if (!gameRunning || playerDead) return;
+
+        let me = null;
+        if (latestState && actualId && latestState.snakes[actualId]) {
+            me = latestState.snakes[actualId];
+            if (me.trapCooldown > 0) return; // Prevent spam
+        }
+
+        console.log('[Game] Place Trap');
+
+        if (isSolo) {
+            if (soloEngine && actualId) soloEngine.placeTrap(actualId);
+        } else {
+            // Multiplayer
+            const socket = window.GameControls.getSocket();
+            if (socket) socket.emit('trap');
+        }
+    };
+
+    window.changeDirection = function (dir) {
+        if (!gameRunning || playerDead) return;
+
+        // Prevent 180° turns client-side
+        let currentDir = null;
+        if (latestState && actualId && latestState.snakes[actualId]) {
+            currentDir = latestState.snakes[actualId].direction;
+        }
+
+        const OPPOSITE = { UP: 'DOWN', DOWN: 'UP', LEFT: 'RIGHT', RIGHT: 'LEFT' };
+        if (currentDir && OPPOSITE[dir] === currentDir) return;
+
+        if (isSolo) {
+            if (soloEngine && actualId) soloEngine.setDirection(actualId, dir);
+        } else {
+            const socket = window.GameControls.getSocket();
+            if (socket) socket.emit('direction', dir);
+        }
+    };
+
+    // ── Play Again / Back (solo override) ──
     if (isSolo) {
-        btnPlayAgain.addEventListener('click', soloPlayAgain);
-        btnBackLobby.addEventListener('click', () => {
+        const soloBackLobby = () => {
             if (soloEngine) soloEngine.stop();
             clearInterval(soloTimerInterval);
             window.location.href = 'lobby.html';
-        });
+        };
+        btnPlayAgain.addEventListener('click', soloPlayAgain);
+        btnBackLobby.addEventListener('click', soloBackLobby);
+        btnPlayAgain.addEventListener('touchstart', function (e) { e.preventDefault(); soloPlayAgain(); }, { passive: false });
+        btnBackLobby.addEventListener('touchstart', function (e) { e.preventDefault(); soloBackLobby(); }, { passive: false });
     }
 
     // ── Countdown ──
@@ -599,6 +673,10 @@
         } else {
             abilityTrap.classList.remove('on-cooldown');
             abilityTrap.style.setProperty('--cooldown-pct', '0%');
+        }
+        // Sync mobile touch button cooldowns
+        if (window.TouchControls) {
+            TouchControls.updateCooldowns(me.dashCooldown, 35, me.trapCooldown, 50);
         }
     }
 

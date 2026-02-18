@@ -46,6 +46,35 @@
     let soloDifficulty = 'medium';
     let soloBots = 3;
 
+    // Control type toggle
+    const controlToggle = document.getElementById('control-type-toggle');
+    const pillDpad = document.getElementById('pill-dpad');
+    const pillJoystick = document.getElementById('pill-joystick');
+    let controlType = localStorage.getItem('ouroboros_control_type') || 'dpad';
+
+    // Set initial state
+    if (controlType === 'joystick') {
+        pillDpad.classList.remove('active');
+        pillJoystick.classList.add('active');
+    }
+
+    if (pillDpad) {
+        pillDpad.addEventListener('click', () => {
+            controlType = 'dpad';
+            localStorage.setItem('ouroboros_control_type', 'dpad');
+            pillDpad.classList.add('active');
+            pillJoystick.classList.remove('active');
+        });
+    }
+    if (pillJoystick) {
+        pillJoystick.addEventListener('click', () => {
+            controlType = 'joystick';
+            localStorage.setItem('ouroboros_control_type', 'joystick');
+            pillJoystick.classList.add('active');
+            pillDpad.classList.remove('active');
+        });
+    }
+
     // ═══════ VIEW MANAGEMENT ═══════
     function showView(view) {
         [menuView, soloView, joinView, waitingView].forEach(v => v.classList.remove('active'));
@@ -125,7 +154,10 @@
         showView(menuView);
     });
 
-    btnSoloStart.addEventListener('click', () => {
+    btnSoloStart.addEventListener('click', startSoloGame);
+    btnSoloStart.addEventListener('touchstart', function (e) { e.preventDefault(); startSoloGame(); }, { passive: false });
+
+    function startSoloGame() {
         const name = getPlayerName();
         sessionStorage.setItem('ouroboros_name', name);
         if (soloMode === 'classic') {
@@ -133,7 +165,7 @@
         } else {
             window.location.href = `game.html?mode=arena&difficulty=${soloDifficulty}&bots=${soloBots}`;
         }
-    });
+    }
 
     // ═══════ CREATE ROOM ═══════
     btnCreate.addEventListener('click', () => {

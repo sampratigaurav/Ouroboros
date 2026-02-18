@@ -1,0 +1,690 @@
+/* ======================== MOBILE SUPPORT ======================== */
+
+/* ═══════ MOBILE CONTROLS AREA ═══════ */
+.mobile-controls-area {
+    display: none;
+}
+
+body.is-touch .mobile-controls-area {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 16px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    align-items: flex-end;
+    justify-content: space-between;
+    z-index: 100;
+    pointer-events: none;
+    gap: 12px;
+}
+
+body.is-touch .mobile-controls-area>* {
+    pointer-events: auto;
+}
+
+/* ═══════ D-PAD ═══════ */
+.dpad-container {
+    position: relative;
+    width: 144px;
+    height: 144px;
+    flex-shrink: 0;
+}
+
+.dpad-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dpad-btn {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    background: rgba(10, 10, 14, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition: transform 0.1s ease, background 0.1s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.dpad-up {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.dpad-down {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.dpad-left {
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.dpad-right {
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.dpad-btn.active,
+.dpad-btn:active {
+    background: rgba(0, 255, 135, 0.15);
+    border-color: var(--accent-green);
+    color: var(--accent-green);
+    box-shadow: 0 0 16px rgba(0, 255, 135, 0.25);
+    transform-origin: center;
+}
+
+.dpad-up.active,
+.dpad-up:active {
+    transform: translateX(-50%) scale(0.92);
+}
+
+.dpad-down.active,
+.dpad-down:active {
+    transform: translateX(-50%) scale(0.92);
+}
+
+.dpad-left.active,
+.dpad-left:active {
+    transform: translateY(-50%) scale(0.92);
+}
+
+.dpad-right.active,
+.dpad-right:active {
+    transform: translateY(-50%) scale(0.92);
+}
+
+/* ═══════ JOYSTICK ═══════ */
+.joystick-container {
+    flex-shrink: 0;
+}
+
+.joystick-base {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(10, 10, 14, 0.5);
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    touch-action: none;
+}
+
+.joystick-knob {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    transition: transform 0.05s ease-out, background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    will-change: transform;
+}
+
+.joystick-knob.active {
+    background: rgba(0, 255, 135, 0.2);
+    border-color: var(--accent-green);
+    box-shadow: 0 0 16px rgba(0, 255, 135, 0.3);
+}
+
+/* ═══════ TOUCH ABILITY BUTTONS ═══════ */
+.touch-abilities {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.touch-ability-btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    background: rgba(10, 10, 14, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition: transform 0.12s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.touch-ability-btn .ability-emoji {
+    font-size: 1.3rem;
+    line-height: 1;
+    position: relative;
+    z-index: 2;
+}
+
+.touch-ability-btn span {
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    color: var(--text-muted);
+    line-height: 1;
+    position: relative;
+    z-index: 2;
+}
+
+.touch-ability-btn.pressed {
+    transform: scale(0.88);
+    border-color: var(--accent-green);
+    box-shadow: 0 0 20px rgba(0, 255, 135, 0.3);
+}
+
+.touch-dash.pressed {
+    border-color: #ffd93d;
+    box-shadow: 0 0 20px rgba(255, 217, 61, 0.35);
+}
+
+.touch-trap.pressed {
+    border-color: #ff6b6b;
+    box-shadow: 0 0 20px rgba(255, 107, 107, 0.35);
+}
+
+/* Cooldown overlay */
+.touch-cooldown-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 0%;
+    background: rgba(0, 0, 0, 0.55);
+    border-radius: 0 0 50% 50%;
+    transition: height 0.15s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.touch-ability-btn.on-cooldown {
+    opacity: 0.6;
+    filter: grayscale(0.3);
+}
+
+/* ═══════ CONTROL TYPE TOGGLE (Lobby) ═══════ */
+.control-type-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.control-type-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.control-type-pills {
+    display: flex;
+    gap: 4px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 3px;
+}
+
+.control-pill {
+    padding: 6px 14px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.control-pill.active {
+    background: rgba(168, 85, 247, 0.15);
+    color: #c4b5fd;
+    box-shadow: 0 0 8px rgba(168, 85, 247, 0.1);
+}
+
+/* ═══════ GAME — MOBILE RESPONSIVE ═══════ */
+@media (max-width: 768px) {
+
+    /* Reserve space at bottom for mobile controls */
+    body.is-touch .game-wrapper {
+        height: 100vh;
+    }
+
+    body.is-touch .game-canvas {
+        height: calc(100vh - 170px - env(safe-area-inset-bottom));
+    }
+
+    /* HUD */
+    .game-hud {
+        padding: 10px 12px;
+        padding-top: calc(10px + env(safe-area-inset-top));
+    }
+
+    .hud-left {
+        padding: 8px 10px;
+        min-width: 110px;
+        border-radius: 10px;
+    }
+
+    .hud-right {
+        padding: 8px 10px;
+        border-radius: 10px;
+    }
+
+    .hud-label {
+        font-size: 0.55rem;
+    }
+
+    .hud-score-item {
+        font-size: 0.7rem;
+        gap: 5px;
+        padding: 2px 0;
+    }
+
+    .hud-score-name {
+        min-width: 50px;
+    }
+
+    .hud-alive-count {
+        font-size: 1.2rem;
+    }
+
+    /* Abilities HUD — hide desktop ability bar on touch */
+    body.is-touch .hud-abilities {
+        display: none;
+    }
+
+    /* Kill feed */
+    .kill-feed {
+        top: auto;
+        bottom: 190px;
+        right: 10px;
+        max-width: 180px;
+    }
+
+    .kill-toast {
+        font-size: 0.65rem;
+        padding: 4px 8px;
+    }
+
+    /* Death banner */
+    .death-banner {
+        font-size: 0.8rem;
+        padding: 10px 20px;
+        top: 40%;
+    }
+
+    /* Game over overlay */
+    .overlay-content {
+        padding: 24px 20px;
+        max-width: 340px;
+    }
+
+    .overlay-icon {
+        font-size: 2.5rem;
+    }
+
+    .overlay-title {
+        font-size: 1.6rem;
+    }
+
+    .overlay-subtitle {
+        font-size: 0.82rem;
+    }
+
+    .overlay-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .btn-overlay {
+        padding: 14px 20px;
+        font-size: 0.9rem;
+        width: 100%;
+        min-height: 48px;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+
+    .overlay-solo-stats {
+        gap: 20px;
+        padding: 10px 16px;
+    }
+
+    .solo-final-value {
+        font-size: 1.2rem;
+    }
+
+    /* Countdown */
+    .countdown-number {
+        font-size: 4.5rem;
+    }
+}
+
+/* ═══════ LOBBY — MOBILE RESPONSIVE ═══════ */
+@media (max-width: 768px) {
+    .lobby-container {
+        padding: 80px 16px 30px;
+        padding-bottom: calc(40px + env(safe-area-inset-bottom));
+        min-height: 100vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .lobby-title {
+        font-size: 1.6rem;
+    }
+
+    .lobby-subtitle {
+        font-size: 0.85rem;
+        margin-bottom: 24px;
+    }
+
+    .lobby-name-input {
+        padding: 14px 16px;
+        font-size: 0.95rem;
+        min-height: 48px;
+    }
+
+    .btn-lobby {
+        padding: 14px 16px;
+        font-size: 0.9rem;
+        min-height: 48px;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+
+    .solo-btn {
+        padding: 16px 16px;
+        font-size: 0.95rem;
+        min-height: 52px;
+    }
+
+    /* Mode cards stack on small screens */
+    .mode-cards {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .mode-card {
+        padding: 18px 14px;
+        min-height: 48px;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .mode-card-icon {
+        font-size: 1.6rem;
+        margin-bottom: 8px;
+    }
+
+    .mode-card h3 {
+        font-size: 0.92rem;
+    }
+
+    .mode-card p {
+        font-size: 0.72rem;
+    }
+
+    .arena-options {
+        padding: 14px;
+    }
+
+    .option-group {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .option-label {
+        text-align: center;
+        min-width: auto;
+    }
+
+    .diff-btn,
+    .bot-btn {
+        min-height: 44px;
+        min-width: 44px;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+
+    .code-input {
+        font-size: 1.4rem;
+        padding: 14px;
+        max-width: 240px;
+        min-height: 52px;
+    }
+
+    .room-code-display {
+        font-size: 1.5rem;
+        padding: 8px 20px;
+    }
+
+    .waiting-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .btn-start,
+    .btn-ready,
+    .btn-back {
+        width: 100%;
+        padding: 14px 20px;
+        min-height: 48px;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+
+    .player-list-item {
+        padding: 10px 14px;
+    }
+
+    .player-name {
+        font-size: 0.85rem;
+    }
+
+    /* Solo actions — ensure Start Game is visible */
+    .solo-actions {
+        flex-direction: column;
+        gap: 8px;
+        padding-bottom: 20px;
+    }
+
+    .solo-actions .btn-lobby,
+    .solo-actions .btn-back {
+        width: 100%;
+        min-height: 52px;
+        font-size: 0.95rem;
+    }
+
+    /* Join actions */
+    .join-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .join-actions .btn-lobby,
+    .join-actions .btn-back {
+        width: 100%;
+        min-height: 48px;
+    }
+
+    /* Back link */
+    .back-home {
+        top: calc(12px + env(safe-area-inset-top));
+        left: calc(12px + env(safe-area-inset-left));
+        font-size: 0.8rem;
+        min-height: 44px;
+        min-width: 44px;
+        display: flex;
+        align-items: center;
+    }
+}
+
+/* ═══════ LANDING — MOBILE RESPONSIVE ═══════ */
+@media (max-width: 768px) {
+    .hero-content {
+        padding: 0 16px;
+    }
+
+    .hero-headline {
+        font-size: 1.8rem;
+    }
+
+    .hero-subtext {
+        font-size: 0.88rem;
+    }
+
+    .hero-cta {
+        padding: 14px 28px;
+        font-size: 0.95rem;
+        min-height: 48px;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+
+    .game-preview-section {
+        max-width: 90%;
+    }
+
+    .navbar {
+        padding: 12px 16px;
+    }
+
+    .navbar-links {
+        display: none;
+    }
+
+    .btn-play {
+        padding: 10px 16px;
+        font-size: 0.82rem;
+        min-height: 44px;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .modal {
+        margin: 16px;
+        padding: 24px 20px;
+        max-height: 85vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* ═══════ VERY SMALL SCREENS ═══════ */
+@media (max-width: 400px) {
+    .lobby-title {
+        font-size: 1.3rem;
+    }
+
+    .hero-headline {
+        font-size: 1.4rem;
+    }
+
+    .touch-ability-btn {
+        width: 56px;
+        height: 56px;
+        font-size: 1.1rem;
+    }
+
+    .dpad-container {
+        width: 130px;
+        height: 130px;
+    }
+
+    .dpad-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 0.9rem;
+    }
+
+    .joystick-base {
+        width: 100px;
+        height: 100px;
+    }
+
+    .joystick-knob {
+        width: 40px;
+        height: 40px;
+    }
+
+    .hud-left {
+        min-width: 90px;
+        padding: 6px 8px;
+    }
+
+    .hud-score-item {
+        font-size: 0.62rem;
+    }
+}
+
+/* ═══════ SAFE AREA INSETS ═══════ */
+@supports (padding: env(safe-area-inset-top)) {
+    .game-wrapper {
+        padding-top: env(safe-area-inset-top);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+    }
+
+    /* Don't add bottom padding on touch — controller area handles it */
+    body:not(.is-touch) .game-wrapper {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
+
+/* ═══════ PREVENT TEXT SELECTION ON TOUCH ═══════ */
+body.is-touch {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+/* Ensure game over overlay is above controls on mobile */
+body.is-touch .game-overlay {
+    z-index: 200;
+}

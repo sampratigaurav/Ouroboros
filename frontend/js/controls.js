@@ -32,30 +32,27 @@ window.GameControls = (function () {
     }
 
     function handleKeyDown(e) {
-        if (!enabled || !socket) return;
+        if (!enabled) return;
 
         // Direction
         const dir = KEY_MAP[e.key];
         if (dir) {
             e.preventDefault();
-            // Prevent 180° reversal on client side too
-            if (lastDirection && OPPOSITE[dir] === lastDirection) return;
-            lastDirection = dir;
-            socket.emit('direction', dir);
+            if (window.changeDirection) window.changeDirection(dir);
             return;
         }
 
         // Dash
         if (e.key === ' ' || e.code === 'Space') {
             e.preventDefault();
-            socket.emit('dash');
+            if (window.activateDash) window.activateDash();
             return;
         }
 
         // Trap
         if (e.key === 't' || e.key === 'T') {
             e.preventDefault();
-            socket.emit('trap');
+            if (window.placeTrap) window.placeTrap();
             return;
         }
     }
@@ -72,5 +69,9 @@ window.GameControls = (function () {
         lastDirection = dir;
     }
 
-    return { init, disable, enable, setDirection };
+    function getSocket() {
+        return socket;
+    }
+
+    return { init, disable, enable, setDirection, getSocket };
 })();

@@ -21,17 +21,28 @@ window.GameRenderer = (function () {
     const deathTimers = {}; // id -> { body, color, startFrame }
     const DISSOLVE_FRAMES = 45;
 
+    // Mobile controller area height
+    const MOBILE_CONTROLS_HEIGHT = 170;
+    const isMobileTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+
     function resize() {
         const dpr = window.devicePixelRatio || 1;
         width = window.innerWidth;
         height = window.innerHeight;
+
+        // On mobile touch, reduce canvas height to leave room for controls
+        const canvasHeight = (isMobileTouch && width <= 768) ? height - MOBILE_CONTROLS_HEIGHT : height;
+
         canvas.width = width * dpr;
-        canvas.height = height * dpr;
+        canvas.height = canvasHeight * dpr;
         canvas.style.width = width + 'px';
-        canvas.style.height = height + 'px';
+        canvas.style.height = canvasHeight + 'px';
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         bloomCanvas.width = Math.floor(width / 2);
-        bloomCanvas.height = Math.floor(height / 2);
+        bloomCanvas.height = Math.floor(canvasHeight / 2);
+
+        // Update internal dimensions to match canvas
+        height = canvasHeight;
     }
     window.addEventListener('resize', resize);
     resize();

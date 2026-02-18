@@ -3,10 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Ouroboros — Game Lobby</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/lobby.css">
+    <link rel="stylesheet" href="css/mobile.css">
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐍</text></svg>">
 </head>
@@ -73,6 +75,15 @@
                             <button class="bot-btn selected" data-bots="3">3</button>
                             <button class="bot-btn" data-bots="4">4</button>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Control Type Toggle (mobile) -->
+                <div class="control-type-toggle" id="control-type-toggle">
+                    <span class="control-type-label">Controls:</span>
+                    <div class="control-type-pills">
+                        <button class="control-pill active" data-type="dpad" id="pill-dpad">D-Pad</button>
+                        <button class="control-pill" data-type="joystick" id="pill-joystick">Joystick</button>
                     </div>
                 </div>
 
