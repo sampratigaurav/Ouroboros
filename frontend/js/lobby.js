@@ -4,7 +4,7 @@
     'use strict';
 
     const socket = io(window.GameConfig.BACKEND_URL, {
-        transports: ["websocket"],
+        transports: ["websocket", "polling"],
         secure: true
     });
 
