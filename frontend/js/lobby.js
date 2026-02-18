@@ -3,7 +3,7 @@
 (function () {
     'use strict';
 
-    const socket = io();
+    const socket = io(window.GameConfig.BACKEND_URL);
 
     // DOM elements
     const menuView = document.getElementById('menu-view');

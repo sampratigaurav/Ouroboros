@@ -301,7 +301,7 @@
     }
 
     function submitSoloScore(name, score, time, mode) {
-        fetch('/api/solo-score', {
+        fetch(`${window.GameConfig.BACKEND_URL}/api/solo-score`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name, score, survivalTime: time, mode })
@@ -412,7 +412,7 @@
     //  MULTIPLAYER MODE
     // ═══════════════════════════════════════
     function initMultiplayerMode() {
-        const socket = io();
+        const socket = io(window.GameConfig.BACKEND_URL);
 
         socket.on('connect', () => {
             actualId = socket.id;

@@ -371,6 +371,6 @@ io.on('connection', (socket) => {
     });
 });
 
-server.listen(PORT, () => {
-    console.log(`\n  🐍 Project Ouroboros server running on http://localhost:${PORT}\n`);
+server.listen(PORT, '0.0.0.0', () => {
+    console.log(`\n  🐍 Project Ouroboros server running on http://0.0.0.0:${PORT}\n`);
 });
