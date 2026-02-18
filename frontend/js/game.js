@@ -412,7 +412,10 @@
     //  MULTIPLAYER MODE
     // ═══════════════════════════════════════
     function initMultiplayerMode() {
-        const socket = io(window.GameConfig.BACKEND_URL || undefined);
+        const socket = io(window.GameConfig.BACKEND_URL, {
+            transports: ["websocket"],
+            secure: true
+        });
 
         socket.on('connect', () => {
             actualId = socket.id;
