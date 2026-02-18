@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ouroboros — Arena</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/game.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐍</text></svg>">
+</head>
+
+<body>
+    <div class="game-wrapper" id="game-wrapper">
+        <canvas class="game-canvas" id="game-canvas"></canvas>
+
+        <!-- HUD -->
+        <div class="game-hud" id="game-hud">
+            <div class="hud-left">
+                <span class="hud-label">Scoreboard</span>
+                <ul class="hud-score-list" id="hud-scores"></ul>
+            </div>
+            <div class="hud-right">
+                <span class="hud-label">Alive</span>
+                <span class="hud-alive-count" id="hud-alive">0</span>
+                <!-- Solo-specific stats -->
+                <div class="solo-stats" id="solo-stats" style="display:none;">
+                    <div class="solo-stat">
+                        <span class="hud-label">Time</span>
+                        <span class="solo-stat-value" id="solo-time">0:00</span>
+                    </div>
+                    <div class="solo-stat">
+                        <span class="hud-label">Best</span>
+                        <span class="solo-stat-value" id="solo-best">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Abilities HUD -->
+        <div class="hud-abilities" id="hud-abilities">
+            <div class="ability-slot">
+                <div class="ability-icon" id="ability-dash">⚡</div>
+                <span class="ability-key">SPACE</span>
+            </div>
+            <div class="ability-slot">
+                <div class="ability-icon" id="ability-trap">💣</div>
+                <span class="ability-key">T</span>
+            </div>
+        </div>
+
+        <!-- Death banner -->
+        <div class="death-banner" id="death-banner">☠ You died — spectating...</div>
+
+        <!-- Kill Feed -->
+        <div class="kill-feed" id="kill-feed"></div>
+
+        <!-- Game Over Overlay -->
+        <div class="game-overlay" id="game-over-overlay">
+            <div class="overlay-content">
+                <div class="overlay-icon" id="overlay-icon">🏆</div>
+                <h2 class="overlay-title" id="overlay-title">Victory!</h2>
+                <p class="overlay-subtitle" id="overlay-subtitle"></p>
+                <div class="overlay-solo-stats" id="overlay-solo-stats" style="display:none;">
+                    <div class="solo-final-stat">
+                        <span class="solo-final-label">Score</span>
+                        <span class="solo-final-value" id="final-score">0</span>
+                    </div>
+                    <div class="solo-final-stat">
+                        <span class="solo-final-label">Time Survived</span>
+                        <span class="solo-final-value" id="final-time">0:00</span>
+                    </div>
+                </div>
+                <ul class="overlay-scoreboard" id="overlay-scoreboard"></ul>
+                <div class="overlay-actions">
+                    <button class="btn-overlay" id="btn-back-lobby">Back to Lobby</button>
+                    <button class="btn-overlay primary" id="btn-play-again">Play Again</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Solo engine and bot AI -->
+    <script src="js/soloEngine.js"></script>
+    <script src="js/botAI.js"></script>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/renderer.js"></script>
+    <script src="js/controls.js"></script>
+    <script src="js/game.js"></script>
+</body>
+
+</html>

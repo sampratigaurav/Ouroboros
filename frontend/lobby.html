@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ouroboros — Game Lobby</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/lobby.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐍</text></svg>">
+</head>
+
+<body>
+    <a href="index.html" class="back-home">← Back</a>
+
+    <div class="lobby-container">
+        <!-- MENU VIEW -->
+        <div class="lobby-view active" id="menu-view">
+            <div class="lobby-menu">
+                <h1 class="lobby-title">Game Lobby</h1>
+                <p class="lobby-subtitle">Choose your mode and enter the arena.</p>
+
+                <input type="text" class="lobby-name-input" id="player-name" placeholder="Enter your name"
+                    maxlength="16" autocomplete="off">
+
+                <div class="lobby-actions">
+                    <button class="btn-lobby solo-btn" id="btn-solo">
+                        <span class="btn-icon">🎮</span>
+                        Play Solo
+                    </button>
+                    <div class="lobby-actions-row">
+                        <button class="btn-lobby primary" id="btn-create">Create Room</button>
+                        <button class="btn-lobby" id="btn-join-view">Join Room</button>
+                    </div>
+                </div>
+                <div class="error-msg" id="menu-error"></div>
+            </div>
+        </div>
+
+        <!-- SOLO MODE SELECTION VIEW -->
+        <div class="lobby-view" id="solo-view">
+            <div class="solo-selection">
+                <h2>Select Mode</h2>
+
+                <div class="mode-cards">
+                    <div class="mode-card selected" data-mode="classic" id="card-classic">
+                        <div class="mode-card-icon">🐍</div>
+                        <h3>Classic Solo</h3>
+                        <p>Classic snake. Eat, grow, survive. Beat your high score.</p>
+                    </div>
+                    <div class="mode-card" data-mode="arena" id="card-arena">
+                        <div class="mode-card-icon">⚔️</div>
+                        <h3>Arena Solo</h3>
+                        <p>Full arena with AI bots, abilities, shrinking zone &amp; wormholes.</p>
+                    </div>
+                </div>
+
+                <!-- Arena Options (shown when Arena selected) -->
+                <div class="arena-options" id="arena-options">
+                    <div class="option-group">
+                        <label class="option-label">Difficulty</label>
+                        <div class="difficulty-picker" id="difficulty-picker">
+                            <button class="diff-btn" data-diff="easy">Easy</button>
+                            <button class="diff-btn selected" data-diff="medium">Medium</button>
+                            <button class="diff-btn" data-diff="hard">Hard</button>
+                        </div>
+                    </div>
+                    <div class="option-group">
+                        <label class="option-label">Bots</label>
+                        <div class="bot-picker" id="bot-picker">
+                            <button class="bot-btn" data-bots="2">2</button>
+                            <button class="bot-btn selected" data-bots="3">3</button>
+                            <button class="bot-btn" data-bots="4">4</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="solo-actions">
+                    <button class="btn-back" id="btn-solo-back">Back</button>
+                    <button class="btn-lobby primary" id="btn-solo-start">Start Game</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- JOIN VIEW -->
+        <div class="lobby-view" id="join-view">
+            <div class="join-room-view">
+                <h2>Join Room</h2>
+                <input type="text" class="code-input" id="room-code-input" placeholder="CODE" maxlength="6"
+                    autocomplete="off">
+                <div class="join-actions">
+                    <button class="btn-back" id="btn-join-back">Back</button>
+                    <button class="btn-lobby primary" id="btn-join-confirm">Join</button>
+                </div>
+                <div class="error-msg" id="join-error"></div>
+            </div>
+        </div>
+
+        <!-- WAITING ROOM VIEW -->
+        <div class="lobby-view" id="waiting-view">
+            <div class="waiting-room">
+                <h2>Waiting Room</h2>
+                <div class="room-code-display" id="room-code-display">------</div>
+                <p class="room-code-hint">Share this code with your friends</p>
+
+                <ul class="player-list" id="player-list"></ul>
+
+                <div class="waiting-actions" id="waiting-actions">
+                    <button class="btn-back" id="btn-leave">Leave</button>
+                    <button class="btn-ready" id="btn-ready">Ready</button>
+                    <button class="btn-start" id="btn-start" disabled>Start Game</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/lobby.js"></script>
+</body>
+
+</html>

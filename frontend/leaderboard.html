@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ouroboros — Leaderboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/leaderboard.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐍</text></svg>">
+</head>
+
+<body>
+    <!-- ═══════ NAVBAR ═══════ -->
+    <nav class="navbar">
+        <div class="navbar-logo">
+            <a href="index.html" style="display:flex;align-items:center;gap:12px;">
+                <div class="navbar-logo-icon">
+                    <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="10" height="10" rx="2" fill="#555" opacity="0.6" />
+                        <rect x="14" y="2" width="10" height="10" rx="2" fill="#666" opacity="0.7" />
+                        <rect x="2" y="14" width="10" height="10" rx="2" fill="#666" opacity="0.7" />
+                        <rect x="14" y="14" width="10" height="10" rx="2" fill="#888" opacity="0.8" />
+                        <rect x="26" y="14" width="10" height="10" rx="2" fill="#555" opacity="0.6" />
+                        <rect x="14" y="26" width="10" height="10" rx="2" fill="#555" opacity="0.6" />
+                        <rect x="26" y="26" width="10" height="10" rx="2" fill="#666" opacity="0.5" />
+                    </svg>
+                </div>
+                <span class="navbar-logo-text">Ouroboros</span>
+            </a>
+        </div>
+
+        <ul class="navbar-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="leaderboard.html" style="color:var(--text-primary)">Leaderboard</a></li>
+        </ul>
+
+        <a href="lobby.html" class="btn-play">
+            <svg viewBox="0 0 24 24">
+                <polygon points="5,3 19,12 5,21" />
+            </svg>
+            Play Now
+        </a>
+    </nav>
+
+    <div class="leaderboard-container">
+        <div class="leaderboard-header">
+            <h1 class="leaderboard-title">Leaderboard</h1>
+            <p class="leaderboard-subtitle">Top players ranked by performance</p>
+
+            <!-- Tab Switcher -->
+            <div class="lb-tabs">
+                <button class="lb-tab active" data-tab="multiplayer" id="tab-multi">⚔️ Multiplayer</button>
+                <button class="lb-tab" data-tab="solo" id="tab-solo">🎮 Solo</button>
+            </div>
+        </div>
+
+        <!-- Multiplayer Table -->
+        <div class="leaderboard-table-wrap" id="multi-table-wrap">
+            <table class="leaderboard-table" id="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Player</th>
+                        <th>Wins</th>
+                        <th>Games</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboard-body">
+                </tbody>
+            </table>
+
+            <div class="leaderboard-empty" id="leaderboard-empty" style="display:none;">
+                <div class="empty-icon">🏆</div>
+                <p>No multiplayer games played yet.<br>Be the first to claim the throne!</p>
+            </div>
+        </div>
+
+        <!-- Solo Table -->
+        <div class="leaderboard-table-wrap" id="solo-table-wrap" style="display:none;">
+            <table class="leaderboard-table" id="solo-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Player</th>
+                        <th>Score</th>
+                        <th>Time</th>
+                        <th>Mode</th>
+                    </tr>
+                </thead>
+                <tbody id="solo-body">
+                </tbody>
+            </table>
+
+            <div class="leaderboard-empty" id="solo-empty" style="display:none;">
+                <div class="empty-icon">🎮</div>
+                <p>No solo games played yet.<br>Try Classic or Arena Solo mode!</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/leaderboard.js"></script>
+</body>
+
+</html>

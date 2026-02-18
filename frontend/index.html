@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ouroboros - A modern competitive multiplayer snake arena. Play the classic game reimagined with real-time multiplayer, special abilities, and a shrinking arena.">
+  <title>Ouroboros — Competitive Multiplayer Snake Arena</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐍</text></svg>">
+</head>
+<body>
+  <!-- ═══════ NAVBAR ═══════ -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-logo">
+      <div class="navbar-logo-icon">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="10" height="10" rx="2" fill="#555" opacity="0.6"/>
+          <rect x="14" y="2" width="10" height="10" rx="2" fill="#666" opacity="0.7"/>
+          <rect x="2" y="14" width="10" height="10" rx="2" fill="#666" opacity="0.7"/>
+          <rect x="14" y="14" width="10" height="10" rx="2" fill="#888" opacity="0.8"/>
+          <rect x="26" y="14" width="10" height="10" rx="2" fill="#555" opacity="0.6"/>
+          <rect x="14" y="26" width="10" height="10" rx="2" fill="#555" opacity="0.6"/>
+          <rect x="26" y="26" width="10" height="10" rx="2" fill="#666" opacity="0.5"/>
+        </svg>
+      </div>
+      <span class="navbar-logo-text">Ouroboros</span>
+    </div>
+
+    <ul class="navbar-links">
+      <li><a href="#" id="nav-how-to-play">How to play</a></li>
+      <li><a href="leaderboard.html" id="nav-leaderboard">Leaderboard</a></li>
+      <li><a href="#" id="nav-about">About</a></li>
+    </ul>
+
+    <a href="lobby.html" class="btn-play" id="nav-play-btn">
+      <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+      Play Now
+    </a>
+  </nav>
+
+  <!-- ═══════ HERO ═══════ -->
+  <section class="hero" id="hero">
+    <canvas class="hero-bg-canvas" id="hero-bg-canvas"></canvas>
+
+    <div class="hero-content">
+      <h1 class="hero-headline">
+        You Grew Up. Snake <span class="highlight">Didn't.</span>&nbsp; Play It Again.
+      </h1>
+      <p class="hero-subtext">
+        Before battle passes, loot boxes, and cinematic cutscenes, there was Snake. No fluff, no noise. Just you, the grid, and the growing tail.
+      </p>
+      <a href="lobby.html" class="hero-cta" id="hero-play-btn">
+        <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+        Play Now
+      </a>
+    </div>
+
+    <div class="game-preview-section">
+      <canvas class="game-preview-canvas" id="game-preview-canvas"></canvas>
+    </div>
+  </section>
+
+  <!-- ═══════ HOW TO PLAY MODAL ═══════ -->
+  <div class="modal-overlay" id="how-to-play-modal">
+    <div class="modal">
+      <button class="modal-close" id="htp-close">&times;</button>
+      <h2>How to Play</h2>
+
+      <h3>Controls</h3>
+      <ul>
+        <li><span class="key-badge">↑</span> <span class="key-badge">↓</span> <span class="key-badge">←</span> <span class="key-badge">→</span> &mdash; Move your snake</li>
+        <li><span class="key-badge">SPACE</span> &mdash; Dash (burst of speed)</li>
+        <li><span class="key-badge">T</span> &mdash; Place a trap</li>
+      </ul>
+
+      <h3>Dash Ability</h3>
+      <p>Activate dash to temporarily double your speed. Costs one tail segment and has a 5-second cooldown. Use it to escape danger or close in on prey.</p>
+
+      <h3>Trap Ability</h3>
+      <p>Place a trap behind your snake. Any enemy that hits it dies instantly. Traps are temporary and have a cooldown. Use them strategically to control the arena.</p>
+
+      <h3>Dynamic Arena</h3>
+      <p>The arena slowly shrinks over time, pushing all players into a tighter space. Stay inside the boundary or die.</p>
+
+      <h3>Wormholes</h3>
+      <p>Portals appear on the map. Enter one wormhole and teleport to its partner. Use them for surprise attacks or quick escapes.</p>
+
+      <h3>Victory</h3>
+      <p>The last snake alive wins. Eat food to grow, avoid walls, yourself, and other snakes. Eliminate opponents to climb the leaderboard.</p>
+    </div>
+  </div>
+
+  <!-- ═══════ ABOUT MODAL ═══════ -->
+  <div class="modal-overlay" id="about-modal">
+    <div class="modal">
+      <button class="modal-close" id="about-close">&times;</button>
+      <h2>About Ouroboros</h2>
+      <p>Ouroboros is a modern real-time multiplayer competitive Snake arena. The classic game reimagined with special abilities, a dynamic shrinking arena, wormhole teleportation, and server-authoritative networking.</p>
+
+      <h3>Features</h3>
+      <ul>
+        <li>Real-time multiplayer (2-5 players)</li>
+        <li>Server-authoritative game engine</li>
+        <li>Dash &amp; Trap abilities</li>
+        <li>Shrinking arena mechanic</li>
+        <li>Wormhole teleportation</li>
+        <li>Global leaderboard</li>
+      </ul>
+
+      <h3>Tech Stack</h3>
+      <ul>
+        <li>Frontend: HTML, CSS, JavaScript, Canvas API</li>
+        <li>Backend: Node.js, Express</li>
+        <li>Networking: Socket.IO (WebSockets)</li>
+      </ul>
+
+      <p style="margin-top: 20px; color: var(--text-muted); font-size: 0.8rem;">Built for hackathon. Project Ouroboros © 2026</p>
+    </div>
+  </div>
+
+  <script src="js/landing.js"></script>
+</body>
+</html>
