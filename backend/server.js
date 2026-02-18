@@ -9,10 +9,35 @@ const roomManager = require('./roomManager');
 const GameEngine = require('./gameEngine');
 const leaderboard = require('./leaderboard');
 
+const cors = require('cors');
+
 const app = express();
 const server = http.createServer(app);
+
+const allowedOrigins = [
+    'https://ouroboros-rd4irpnik-samprati-gauravs-projects.vercel.app',
+    'http://localhost:3000',
+    'http://127.0.0.1:3000'
+];
+
+app.use(cors({
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    methods: ['GET', 'POST'],
+    credentials: true
+}));
+
 const io = new Server(server, {
-    cors: { origin: '*' },
+    cors: {
+        origin: allowedOrigins,
+        methods: ["GET", "POST"],
+        credentials: true
+    },
     pingTimeout: 60000,
     pingInterval: 25000
 });
