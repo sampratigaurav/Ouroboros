@@ -3,7 +3,7 @@
 (function () {
     'use strict';
 
-    const socket = io();
+    const socket = io(window.GameConfig ? window.GameConfig.BACKEND_URL : undefined); // Connect to server
 
     // DOM elements
     const menuView = document.getElementById('menu-view');

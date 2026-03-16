@@ -14,13 +14,19 @@ const cors = require('cors');
 const app = express();
 const server = http.createServer(app);
 
-const allowedOrigins = [
-    'https://ouroboros-rd4irpnik-samprati-gauravs-projects.vercel.app'
-];
+function isAllowedOrigin(origin) {
+    if (!origin) return true; // allow non-browser requests (curl, Postman, etc.)
+    // Allow localhost on any port (development)
+    if (/^https?:\/\/localhost(:\d+)?$/.test(origin)) return true;
+    if (/^https?:\/\/127\.0\.0\.1(:\d+)?$/.test(origin)) return true;
+    // Allow any Vercel preview/production deployment
+    if (/^https:\/\/[\w-]+\.vercel\.app$/.test(origin)) return true;
+    return false;
+}
 
 app.use(cors({
     origin: function (origin, callback) {
-        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        if (isAllowedOrigin(origin)) {
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
@@ -32,7 +38,13 @@ app.use(cors({
 
 const io = new Server(server, {
     cors: {
-        origin: allowedOrigins,
+        origin: function (origin, callback) {
+            if (isAllowedOrigin(origin)) {
+                callback(null, true);
+            } else {
+                callback(new Error('Not allowed by CORS'));
+            }
+        },
         methods: ["GET", "POST"],
         credentials: true
     },
@@ -42,7 +54,6 @@ const io = new Server(server, {
 
 const PORT = process.env.PORT || 3000;
 
-// Serve static frontend
 // Serve static frontend
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
 

@@ -35,7 +35,8 @@
     // ═══════ MULTIPLAYER LEADERBOARD ═══════
     async function loadMultiplayer() {
         try {
-            const res = await fetch('/api/leaderboard');
+            const baseUrl = window.GameConfig ? window.GameConfig.BACKEND_URL : '';
+            const res = await fetch(`${baseUrl}/api/leaderboard`);
             const data = await res.json();
 
             if (!data || data.length === 0) {
@@ -74,7 +75,8 @@
     // ═══════ SOLO LEADERBOARD ═══════
     async function loadSolo() {
         try {
-            const res = await fetch('/api/leaderboard/solo');
+            const baseUrl = window.GameConfig ? window.GameConfig.BACKEND_URL : '';
+            const res = await fetch(`${baseUrl}/api/leaderboard/solo`);
             const data = await res.json();
 
             if (!data || data.length === 0) {

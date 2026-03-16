@@ -91,6 +91,11 @@ window.TouchControls = (function () {
     }
 
     function emitDirection(dir) {
+        if (window.changeDirection) {
+            window.changeDirection(dir);
+            return;
+        }
+
         if (socket) {
             socket.emit('direction', dir);
         } else if (soloEngine && playerId) {

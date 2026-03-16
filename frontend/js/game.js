@@ -341,6 +341,10 @@
             soloEngine.botAI = new BotAI(difficulty);
         }
 
+        if (window.TouchControls) {
+            TouchControls.updateRefs({ soloEngine: soloEngine, playerId: actualId });
+        }
+
         // Re-wire events
         wireEngineEvents(soloEngine);
 
@@ -409,7 +413,7 @@
     //  MULTIPLAYER MODE
     // ═══════════════════════════════════════
     function initMultiplayerMode() {
-        const socket = io();
+        const socket = io(window.GameConfig ? window.GameConfig.BACKEND_URL : undefined);
 
         // Init touch controls for multiplayer
         if (window.TouchControls) {
